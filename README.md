@@ -1,65 +1,44 @@
-# echotaskprovider README
+# Readme.md
 
-This is the README for test extension "echotaskprovider". After writing up a brief description, we recommend including the following sections.
+## Problem
 
-## Features
+Function `vscode.tasks.fetchTasks` in Theia works different than in VSCode. Task provided by Task Provider are fetched correcly, but if this task saved in tasks configuration (`tasks.json`) it's fetched in VSCode and not fetched in Theia.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## How to reproduce in VSCode
 
-For example if there is an image subfolder under your extension project workspace:
+1. Clone this project.
+2. Open this project in VSCode (I used v1.46.1).
+3. Run `npm install` and `npm run compile`.
+4. Run Extension from the Run View.
+5. In the `Extension Development Host` window open folder `testdata` of this project.
+6. Open Output view
+7. From the command palette select command `fetch echo tasks`.
+8. Select output channel named `echo-channel`.
+9. Ensure that 3 tasks are provided:
+`Detected task 1
+Detected task 2
+Configured task 3`
+10. This is expected behavior
+11. For further reprodicing in Theia package this project with command: `vsce package`. File `echotaskprovider-0.0.1.vsix` will be created in the root of the project.
 
-\!\[feature X\]\(images/feature-x.png\)
+## How to reproduce in Theia
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+1. Open [https://gitpod.io/#https://github.com/eclipse-theia/theia](https://gitpod.io/#https://github.com/eclipse-theia/theia) to start development with the master branch.
+2. Gitpod will start a properly configured for Theia development workspace, clone and build the Theia repository.
+3. After the build is finished,, upload `echotaskprovider-0.0.1.vsix` extension into folder `plugin`.
+4. Run from the terminal in Gitpod:
+`cd examples/browser && yarn run start ../.. --hostname 0.0.0.0`.
+5. Open `localhost:3000`.
+6. In the `Extension Development Host` window open folder `testdata` of this project.
+7. From the command palette select command `fetch echo tasks`.
+8. Select output channel named `echo-channel`.
+9 Ensure that only 2 tasks are provided:
+`Detected task 1
+Detected task 2`
 
-## Requirements
+## Workaround
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+1. Change the `Configured task 3` task in `tasks.json` file adding property "taskType": "". 
+2. Save the file.
+3. Run command `fetch echo tasks`.
+4. All 3 tasks are fetched now.

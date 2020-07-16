@@ -3,9 +3,8 @@
     "tasks": [
         {
            "type": "echo",
-           "label": "xxx", 
+           "label": "Configured task 3", 
            "text": "xxxxxxxx"
-           
         }
     ]
 }

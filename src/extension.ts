@@ -5,8 +5,8 @@ const outputChannel = vscode.window.createOutputChannel("echo-channel");
 class EchoTaskProvider implements vscode.TaskProvider {
 
 	async provideTasks(): Promise<vscode.Task[]> {
-		const taskA = this.createTask("aaa", "text aaa");
-		const taskB = this.createTask("bbb", "text bbb");
+		const taskA = this.createTask("task 1", "Detected task 1");
+		const taskB = this.createTask("task 2", "Detected task 2");
 		if (taskA === undefined || taskB === undefined){
 			return [];
 		}

@@ -1,5 +1,3 @@
-# Readme.md
-
 ## Problem
 
 Function `vscode.tasks.fetchTasks` in Theia works different than in VSCode. Task provided by Task Provider are fetched correcly, but if this task saved in tasks configuration (`tasks.json`) it's fetched in VSCode and not fetched in Theia.

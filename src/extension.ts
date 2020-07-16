@@ -14,15 +14,16 @@ class EchoTaskProvider implements vscode.TaskProvider {
 	}
 
 	async resolveTask(task: vscode.Task): Promise<vscode.Task | undefined>{
-		if (vscode.workspace.workspaceFolders === undefined || task.definition.type !== "echo") {
+		if (vscode.workspace.workspaceFolders === undefined || 
+			(task.definition.type !== "echo" && task.definition.taskType != "echo")) {
 			return undefined;
 		}
 		return new vscode.Task( 
 			task.definition, 
             vscode.workspace.workspaceFolders[0], 
-            task.definition.label,
+            task.name,
             "echo",
-		new vscode.ShellExecution("echo "+task.definition.text, {cwd: vscode.workspace.workspaceFolders[0].uri.path}));
+		new vscode.ShellExecution("sleep 2; echo "+task.definition.text, {cwd: vscode.workspace.workspaceFolders[0].uri.path}));
 	}
 
 	private createTask(label: string, text: string): vscode.Task | undefined {
@@ -34,7 +35,7 @@ class EchoTaskProvider implements vscode.TaskProvider {
             vscode.workspace.workspaceFolders[0], 
             label,
             "echo",
-		new vscode.ShellExecution("echo "+text, {cwd: vscode.workspace.workspaceFolders[0].uri.path}));
+		new vscode.ShellExecution("sleep 2; echo "+text, {cwd: vscode.workspace.workspaceFolders[0].uri.path}));
 	}
 	
 }
